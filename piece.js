@@ -23,6 +23,11 @@ class Piece {
     this.y = 0;
   }
 
+  move(p) {
+    this.x = p.x;
+    this.y = p.y; //In this case p is gona be the new value of the piece
+  }
+
   draw() {
     this.ctx.fillStyle = this.color; //The ctx.fillStyle style the piece that is in the canvas
     this.shape.forEach((row, y) => {
