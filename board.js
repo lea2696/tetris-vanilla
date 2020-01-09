@@ -1,5 +1,6 @@
 class Board {
   grid;
+  piece;
 
   reset() {
     this.grid = this.getEmptyBoard();
@@ -9,12 +10,24 @@ class Board {
       return row.every((value, dx) => {
         let x = p.x + dx;
         let y = p.y + dy;
-        console.log(y);
+
         return (
           this.isEmpty(value) || (this.insideWalls(x) && this.aboveFloor(y))
         );
       });
     });
+  }
+  rotate() {
+    for (let y = 0; y < this.piece.shape.length; ++y) {
+      for (let x = 0; x < y; ++x) {
+        [this.piece.shape[x][y], this.piece.shape[y][x]] = [
+          this.piece.shape[y][x],
+          this.piece.shape[x][y]
+        ];
+      }
+    }
+    this.piece.shape.forEach(row => row.reverse());
+    return this.piece;
   }
 
   insideWalls(x) {

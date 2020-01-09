@@ -9,14 +9,14 @@ const moves = {
   [KEY.LEFT]: p => ({ ...p, x: p.x - 1 }),
   [KEY.RIGHT]: p => ({ ...p, x: p.x + 1 }),
   [KEY.DOWN]: p => ({ ...p, y: p.y + 1 }),
-  [KEY.SPACE]: p => ({ ...p, y: p.y + 1 })
+  [KEY.SPACE]: p => ({ ...p, y: p.y + 1 }),
+  [KEY.TOP]: p => board.rotate(p)
 };
 
-let board;
+let board = new Board();
 
 function play() {
-  board = new Board();
-  board.getEmptyBoard();
+  board.reset();
   let piece = new Piece(ctx);
   piece.draw();
   board.piece = piece;
@@ -41,10 +41,10 @@ document.addEventListener("keydown", event => {
     // Get new state of piece
     let p = moves[event.keyCode](board.piece);
     console.log(p);
-
     if (board.valid(p)) {
       // If the move is valid, move the piece.
       board.piece.move(p);
+      console.log("entre");
 
       // Clear old position before drawing.
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
